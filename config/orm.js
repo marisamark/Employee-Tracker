@@ -19,28 +19,52 @@ function printQmarks(arr) {
   return tempArr.toString();
 }
 
+function sqlObjVal(obj){
+  let tempArr = [];
+
+  // obj = { name: "Ben", age: 31 }
+
+  for(var i in obj){
+    // console.log(name, "Ben")
+    // console.log(age, 31)
+    // to get "Ben" -> obj[name]
+
+    // name = "Ben"
+    tempArr.push(i + " = " + obj[i])
+  }
+
+  // ['name="Ben"', 'age="31"']
+  // .toString() == "name='Ben', age='31'"
+  return tempArr.toString();
+}
+
 
 var orm = {
 
   selectFrom: function (colTosearch, tableInput, cb) {
-    var queryString = "SELECT ?? FROM ?? ";
-    connection.query(queryString, [colTosearch, tableInput], function (err, result) {
+    var queryString = "SELECT "+colTosearch.toString()+" FROM ?? ";
+    connection.query(queryString, [tableInput], function (err, result) {
       if (err) throw err;
       cb(result)
     });
   },
 
-  insertInto: function (tableName, cols, vals) {
-    let sqlQry = "INSERT INTO ?? (";
-    sqlQry += printQmarks(cols)
-    sqlQry += ") VALUES ('";
-    sqlQry +=  vals.toString() + "');";
-    cols.unshift(tableName);
+  updateWhere: function(tableName, objColVal, condition){
 
-    console.log(sqlQry, cols)
-    connection.query(sqlQry, cols, function(err, result){
+    var sqlQry = "UPDATE " + tableName;
+    sqlQry += " SET ("+ sqlObjVal(objColVal)+") "
+    // sqlQry += " SET ( departmane_name = 'house', ..... ) "
+    sqlQry += "WHERE " + condition
+  },
+
+  insertInto: function (tableName, cols, vals) {
+    let sqlQry = "INSERT INTO "+tableName+" (";
+    sqlQry +=  cols.toString() + ") ";
+    sqlQry += "VALUES (";
+    sqlQry += printQmarks(cols) + ");"
+
+    connection.query(sqlQry, vals, function(err, result){
       if(err) throw err;
-      console.log(result)
     })
   },
 
