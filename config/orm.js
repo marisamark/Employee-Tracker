@@ -11,47 +11,62 @@ var connection = require("./connection.js");
 // * Console log all the client names.
 // * Console log all the parties that have a party-type of grown-up.
 // * Console log all the clients and their parties.
+function printQmarks(arr) {
+  let tempArr = [];
+  for (var i in arr) {
+    tempArr.push("?")
+  }
+  return tempArr.toString();
+}
+
+
 var orm = {
 
-selectAllpartynames: function(colTosearch, tableInput) {
-  var queryString = "SELECT ?? FROM ?? ";
-  connection.query(queryString, [colTosearch, tableInput], function(err, result) {
-    if (err) throw err;
-    console.log(result);
-  });
-},
+  selectFrom: function (colTosearch, tableInput, cb) {
+    var queryString = "SELECT ?? FROM ?? ";
+    connection.query(queryString, [colTosearch, tableInput], function (err, result) {
+      if (err) throw err;
+      cb(result)
+    });
+  },
 
-selectAllclientnames: function(colTosearch, tableInput) {
-  var queryString = "SELECT ?? FROM ?? ";
-  connection.query(queryString, [colTosearch, tableInput], function(err, result) {
-    if (err) throw err;
-    console.log(result);
-  });
-},
+  insertInto: function (tableName, cols, vals) {
+    let sqlQry = "INSERT INTO ?? (";
+    sqlQry += printQmarks(cols)
+    sqlQry += ") VALUES ('";
+    sqlQry +=  vals.toString() + "');";
+    cols.unshift(tableName);
 
-findGrownuppartytype: function(colTosearch, tableInput, colTosearch2, value) {
-var queryString = "SELECT ?? FROM ?? WHERE ?? = ?";
-connection.query(queryString, [colTosearch, tableInput, colTosearch2, value], function(err, result) {
-  if (err) throw err;
-  console.log(result);
-});
-},
+    console.log(sqlQry, cols)
+    connection.query(sqlQry, cols, function(err, result){
+      if(err) throw err;
+      console.log(result)
+    })
+  },
 
-selectAllclientsandparties: function(tableOneCol,tableTwoCol, tableOne, tableTwo, tableTwoForeignKey) {
+  selectFromWhere: function (colTosearch, tableInput, colTosearch2, value) {
+    var queryString = "SELECT ?? FROM ?? WHERE ?? = ?";
+    connection.query(queryString, [colTosearch, tableInput, colTosearch2, value], function (err, result) {
+      if (err) throw err;
+      console.log(result);
+    });
+  },
 
-  var queryString =
-  "SELECT ??, ?? FROM ?? LEFT JOIN ?? ON ??.?? = ??.id";
-  // SELECT client_name, party_name FROM clients LEFT JOIN parties ON parties.client_id = clients.id;
+  selectFromLeftJoin: function (tableOneCol, tableTwoCol, tableOne, tableTwo, tableTwoForeignKey) {
 
-connection.query(
-  queryString,
-  [tableOneCol, tableTwoCol, tableOne, tableTwo, tableTwo, tableTwoForeignKey, tableOne],
-  function(err, result) {
-    if (err) throw err;
-    console.log(result);
+    var queryString =
+      "SELECT ??, ?? FROM ?? LEFT JOIN ?? ON ??.?? = ??.id";
+    // SELECT client_name, party_name FROM clients LEFT JOIN parties ON parties.client_id = clients.id;
+
+    connection.query(
+      queryString,
+      [tableOneCol, tableTwoCol, tableOne, tableTwo, tableTwo, tableTwoForeignKey, tableOne],
+      function (err, result) {
+        if (err) throw err;
+        console.log(result);
+      }
+    );
   }
-);
-}
 };
 
 module.exports = orm;
