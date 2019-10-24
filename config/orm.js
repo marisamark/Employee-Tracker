@@ -1,16 +1,6 @@
 var connection = require("./connection.js");
 
-// Object Relational Mapper (ORM)
 
-// The ?? signs are for swapping out table or column names
-// The ? signs are for swapping out other values
-// These help avoid SQL injection
-// https://en.wikipedia.org/wiki/SQL_injection
-
-// * Console log all the party names.
-// * Console log all the client names.
-// * Console log all the parties that have a party-type of grown-up.
-// * Console log all the clients and their parties.
 function printQmarks(arr) {
   let tempArr = [];
   for (var i in arr) {
@@ -75,7 +65,14 @@ var orm = {
       console.log(result);
     });
   },
-
+  selectAllWhere: function(tableInput, colToSearch, valOfCol, cb) {
+    var queryString = "SELECT * FROM ?? WHERE ?? = ?";
+    connection.query(queryString, [tableInput, colToSearch, valOfCol], function(err, result) {
+      if (err) throw err;
+      cb(result);
+    });
+  },
+  
   selectFromLeftJoin: function (tableOneCol, tableTwoCol, tableOne, tableTwo, tableTwoForeignKey) {
 
     var queryString =

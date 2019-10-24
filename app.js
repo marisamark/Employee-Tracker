@@ -4,6 +4,11 @@ const {
     initialQ,
     addDepartmentQ,
     addRoleQ,
+    addEmployeeQ,
+    viewDepartmentQ,
+    viewRolesQ,
+    viewEmployeesQ,
+    updateEmployeeroles
 
 } = require('./config/questions');
 
@@ -25,9 +30,9 @@ function SwitchMenu(command) {
         case "Add Role":
             return addRole();
         case "Add Employee":
-            return
+            return addEmployee();
         case "View Departments":
-            return
+            return viewDepartment();
         case "View Roles":
             return
         case "View Employees":
@@ -45,7 +50,6 @@ async function addDepartment() {
         console.log(error)
     }
 }
-
 
 
 async function addRole() {
@@ -68,12 +72,34 @@ async function addRole() {
 
             // Searches through result and return FIRST instance evaluation returns true
             const department = result.find(d => d.department_name === department_name);
-            orm.insertInto("role", ["title", "salary", "department_id"], [title, salary, department.id])
+            orm.insertInto("role", ["title", "salary", "department_id"], [title, salary, department.id]);
             MainMenu();
         })
 
     } catch (error) {
         console.log(error)
+    }
+}
+
+async function addEmployee() {
+    try {
+        const { first_name, last_name, role_id, manager_id } = await prompt(addEmployeeQ);
+        orm.insertInto("employee", ["first_name", "last_name", "role_id", "manager_id"], [first_name, last_name, role_id, manager_id]);
+        MainMenu();
+        } catch (error) {
+        console.log(error)
+    }
+}
+
+
+async function viewDepartment() {
+    try {
+        const {department_name_view } = await prompt(viewDepartmentQ);
+        orm.selectFrom("department", ["department_name"], [department_name])
+        MainMenu();
+    } catch (error) {
+        console.log(error)
+
     }
 }
 

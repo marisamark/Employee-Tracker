@@ -48,50 +48,81 @@ exports.addRoleQ = [
 ]
 
 //add employee
-exports.addEmployeeQfirstname = {
-    name: "first_name",
-    type: "input",
-    message: "Enter the employee's first name",
-    validate: function (val) {
-        return val.length > 0
+exports.addEmployeeQ = [
+    {
+        name: "first_name",
+        type: "input",
+        message: "Enter the employee's first name",
+        validate: function (val) {
+            return val.length > 0
+        }
+    },
+    {
+        name: "last_name",
+        type: "input",
+        message: "Enter the employee's last name",
+        validate: function (val) {
+            return val.length > 0
+        }
+    },
+    {
+        name: "role_id",
+        type: "input",
+        message: "Enter the employee's role",
+        validate: function (val) {
+            return val.length > 0
+        }
+    },
+    {
+        name: "manager_id",
+        type: "input",
+        message: "Enter the name of the employee's manager",
+        validate: function (val) {
+            return val.length > 0
+        }
     }
-}
-
-exports.addEmployeeeQlastname = {
-    name: "last_name",
-    type: "input",
-    message: "Enter the employee's last name",
-    validate: function (val) {
-        return val.length > 0
-    }
-}
-
-exports.addEmployeeeQroleid = {
-    name: "role_id",
-    type: "input",
-    message: "Enter the employee's role",
-    validate: function (val) {
-        return val.length > 0
-    }
-}
-
-exports.addEmployeeQmanagerid = {
-    name: "manager_id",
-    type: "input",
-    message: "Enter the name of the employee's manager",
-    validate: function (val) {
-        return val.length > 0
-    }
-}
+]
 
 //view department
 exports.viewDepartmentQ = {
     name: "department_name_view",
     type: "list",
-    message: "Select the Department Name you would like to view",
+    message: "Select the Department you would like to view",
     choices: [],
     validate: function (val) {
         return val.length > 0
     }
 }
 
+//view roles
+exports.viewRolesQ = {
+    name: "roles_view",
+    type: "list",
+    message: "Select the role you would like to view",
+    choices: [],
+    validate: function (val) {
+        return val.length > 0
+    }
+}
+
+//view employees
+exports.viewEmployeesQ = {
+    name: "employees_view",
+    type: "list",
+    message: "Select the employee you would like to view",
+    choices: [],
+    validate: function (val) {
+        return val.length > 0
+    }
+}
+
+//update employee roles
+exports.updateEmployeeroles = {
+    name: "update_employee_roles",
+    type: "list",
+    message: "Select the employee you would like to update the role for",
+    choices: [],
+    validate: function (val) {
+        return val.length > 0
+    }
+}
