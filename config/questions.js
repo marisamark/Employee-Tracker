@@ -68,7 +68,7 @@ exports.addEmployeeQ = [
     {
         name: "role_id",
         type: "input",
-        message: "Enter the employee's role",
+        message: "Enter the employee's role id #",
         validate: function (val) {
             return val.length > 0
         }
@@ -76,45 +76,45 @@ exports.addEmployeeQ = [
     {
         name: "manager_id",
         type: "input",
-        message: "Enter the name of the employee's manager",
+        message: "Input the manager's id #",
         validate: function (val) {
             return val.length > 0
         }
     }
 ]
 
-//view department
-exports.viewDepartmentQ = {
-    name: "department_name_view",
-    type: "list",
-    message: "Select the Department you would like to view",
-    choices: [],
-    validate: function (val) {
-        return val.length > 0
-    }
-}
+// //view department
+// exports.viewDepartmentQ = {
+//     name: "department",
+//     type: "list",
+//     message: "Select the Department you would like to view",
+//     choices: [],
+//     validate: function (val) {
+//         return val.length > 0
+//     }
+// }
 
-//view roles
-exports.viewRolesQ = {
-    name: "roles_view",
-    type: "list",
-    message: "Select the role you would like to view",
-    choices: [],
-    validate: function (val) {
-        return val.length > 0
-    }
-}
+// //view roles
+// exports.viewRolesQ = {
+//     name: "roles_view",
+//     type: "list",
+//     message: "Select the role you would like to view",
+//     choices: [],
+//     validate: function (val) {
+//         return val.length > 0
+//     }
+// }
 
-//view employees
-exports.viewEmployeesQ = {
-    name: "employees_view",
-    type: "list",
-    message: "Select the employee you would like to view",
-    choices: [],
-    validate: function (val) {
-        return val.length > 0
-    }
-}
+// //view employees
+// exports.viewEmployeesQ = {
+//     name: "employees_view",
+//     type: "list",
+//     message: "Select the employee you would like to view",
+//     choices: [],
+//     validate: function (val) {
+//         return val.length > 0
+//     }
+// }
 
 //update employee roles
 exports.updateEmployeeroles = {

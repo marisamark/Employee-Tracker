@@ -5,9 +5,9 @@ const {
     addDepartmentQ,
     addRoleQ,
     addEmployeeQ,
-    viewDepartmentQ,
-    viewRolesQ,
-    viewEmployeesQ,
+    // viewDepartmentQ,
+    // viewRolesQ,
+    // viewEmployeesQ,
     updateEmployeeroles
 
 } = require('./config/questions');
@@ -34,9 +34,9 @@ function SwitchMenu(command) {
         case "View Departments":
             return viewDepartment();
         case "View Roles":
-            return
+            return viewRoles();
         case "View Employees":
-            return
+            return viewEmployees();
         case "Update Employee Roles":
             return
     }
@@ -86,20 +86,37 @@ async function addEmployee() {
         const { first_name, last_name, role_id, manager_id } = await prompt(addEmployeeQ);
         orm.insertInto("employee", ["first_name", "last_name", "role_id", "manager_id"], [first_name, last_name, role_id, manager_id]);
         MainMenu();
-        } catch (error) {
+
+    } catch (error) {
         console.log(error)
     }
 }
 
-
 async function viewDepartment() {
     try {
-        const {department_name_view } = await prompt(viewDepartmentQ);
-        orm.selectFrom("department", ["department_name"], [department_name])
-        MainMenu();
-    } catch (error) {
+        orm.selectAll("department") ;
+        await MainMenu();
+    } catch (error){
         console.log(error)
+    }
+}
 
+async function viewRoles() {
+    try {
+        orm.selectAll("role") 
+        await MainMenu();
+    } catch (error){
+        console.log(error)
+    }
+    
+}
+
+async function viewEmployees() {
+    try {
+        orm.selectAll("employee") 
+        await MainMenu();
+    } catch (error){
+        console.log(error)
     }
 }
 
